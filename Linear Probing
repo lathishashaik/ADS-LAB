@@ -1,0 +1,109 @@
+#include <stdlib.h>
+#include <iostream>
+using namespace std;
+class HashTable{
+private:
+     int size;
+     int *ht;
+public:
+    HashTable(int size){
+        this->size=size;
+        ht=(int *)calloc(size,sizeof(int));
+    }
+    int hashKey(int val){
+        return val%size;
+    }
+    void insert(int val){
+        int i=hashKey(val);
+        for(int j=0;j<size;j++){
+            int index=(i+j)%size;
+            if(ht[index]==0){
+                ht[index]=val;
+                cout<<val<<"Inserted Successfully"<<endl;
+                break;
+            }
+        }
+        
+    }
+    void display(){
+        for(int i=0;i<size;i++){
+            cout<<"[ "<<i<<" : "<<ht[i]<<" ]";
+        }
+    }
+    int search(int val){
+        int i=hashKey(val);
+        for(int j=0;j<size;j++){
+            int index=(i+j)%size;
+            if(ht[index]==val){
+               return index;
+            }
+        }
+        return -1;
+        
+    }
+    void dele(int val){
+        int i=search(val);
+    
+        if(i!=-1){
+            ht[i]==0;
+            cout<<val<<" deleted successfully"<<endl;
+        }
+            
+        else {       
+           cout<<val<<" not found"<<endl;
+        }
+       
+    }
+    
+};
+int main(int argc,char const *argv[]){
+    int size;
+    cout<<"Enter the size"<<endl;
+    cin>>size;
+    HashTable myTable(size);
+    int a[]={52,27,41,31,59,82,47};
+    while(1){
+        cout<<"1.insert 2.delete  3.search    4.Anything to quit"<<endl;
+        int ch;
+        cin>>ch;
+        switch(ch){
+            case 1:
+                cout<<"Enter a value to insert"<<endl;
+                int e1;
+                cin>>e1;
+                myTable.insert(e1);
+                myTable.display();
+                break;
+        
+        case 2:
+                cout<<"Enter a value to delete"<<endl;
+                int e2;
+                cin>>e2;
+                myTable.dele(e2);
+                myTable.display();
+                break;
+        
+        case 3:
+            cout<<"Enter a value to search"<<endl;
+                int e3;
+                cin>>e3;
+                int a1;
+                a1=myTable.search(e3);
+                if(a1!=-1){
+                    cout<<"Element found at location : "<<a1<<endl;
+                }
+                else{
+                    cout<<"Element not found"<<endl;
+                }
+                myTable.display();
+                break;
+        default:
+            exit(0);
+       
+        }
+       
+        
+    }
+    
+    
+}
